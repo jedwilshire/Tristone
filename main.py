@@ -44,7 +44,11 @@ def onMousePress(x, y):
                                 spot.image.blit(selectedPiece.image, (0, 0))
                 checkForScore(selectedPiece.shape, selectedPiece.color)
                 removePieces()
-                if playerIndicator.getText() == 'Player 1 Turn':
+                if int(p1Score.getText()) >= 20:
+                    playerIndicator.setText('Player 1 wins!')
+                elif int(p2Score.getText()) >= 20:
+                    playerIndicator.setText('Player 2 wins!')
+                elif playerIndicator.getText() == 'Player 1 Turn':
                     playerIndicator.setText('Player 2 Turn')
                 else:
                     playerIndicator.setText('Player 1 Turn')
@@ -75,12 +79,9 @@ def checkForScore(shape, color):
 def updateScore(score):
     if playerIndicator.getText() == 'Player 1 Turn':
         p1Score.setText(str(int(p1Score.getText()) + score))
-        if int(p1Score.getText()) >= 20:
-            playerIndicator.setText('Player 1 wins!')
     else:
         p2Score.setText(str(int(p2Score.getText()) + score))
-        if int(p2Score.getText()) >= 20:
-            playerIndicator.setText('Player 2 wins!')
+        
         
 def checkHorizontal(value, x, y):
     row = y
@@ -161,7 +162,7 @@ def draw():
     p2Score.writeText(WIDTH - BOXSIZE, HEIGHT - BOXSIZE // 3)
     if playerIndicator.getText() == 'Player 1 Turn':
         playerIndicator.color = CYAN
-    else:
+    elif playerIndicator.getText() == 'Player 2 Turn':
         playerIndicator.color = ORANGE
     playerIndicator.writeText(WIDTH // 5 * 2, HEIGHT - BOXSIZE // 3)
     pygame.display.update()
